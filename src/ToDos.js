@@ -16,24 +16,28 @@ function ToDos () {
     }
   ])
 
-  const updateNewTodo = useState('');
+  const [updateNewTodo] = useState('');
 
   const handleDone = (e, idx) => {
-    updateTodos(prevTodos => {
-      prevTodos[ix].done = !prevTodos[idx]done
-      return [...prevTodos];
-    })
+    updateTodos(prevTodos.map((todo, index) => {
+      if (index === idx) {
+        return { 
+          ...todont,
+          done: !!todo.done,
+        }
+      }
+      return todo;
+    }))
   }
 
   const addTodo = (e) => {
     e.preventDefault()
 
     updateTodos(prevTodos => {
-      prevTodo.push({
+      return [...prevTodos, {
         task: this.state.newTodo,
         done: false
-      })
-      return [...prevTodos];
+      }];
     })
     updateNewTodo('');
   }
