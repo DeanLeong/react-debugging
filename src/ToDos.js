@@ -1,33 +1,36 @@
 import React, { useState } from 'react'
 import ToDo from './ToDo'
-import './App.css'
+import './ToDos.css'
 
 function ToDos () {
-   = useStte([
+  const [todos, updateTodos] = useState([
     {
       task: "Feed Blair",
       done: false
     }, {
       task: "clean apartment",
       done: false
-    } {
+    }, {
       task: "create debugging assignment",
       done: true
     }
   ])
 
-  const [updateNewTodo] = useState('');
+  const [newTodo, updateNewTodo] = useState('');
 
   const handleDone = (e, idx) => {
-    updateTodos(prevTodos.map((todo, index) => {
-      if (index === idx) {
-        return { 
-          ...todont,
-          done: !!todo.done,
+    console.log(idx);
+    updateTodos(prevTodos => 
+      prevTodos.map((todo, index) => {
+        if (index === idx) {
+          return {
+            ...todo,
+            done: !todo.done,
+          }
         }
-      }
-      return todo;
-    }))
+        return todo;
+      })
+    );
   }
 
   const addTodo = (e) => {
@@ -35,7 +38,7 @@ function ToDos () {
 
     updateTodos(prevTodos => {
       return [...prevTodos, {
-        task: this.state.newTodo,
+        task: newTodo,
         done: false
       }];
     })
@@ -43,27 +46,29 @@ function ToDos () {
   }
 
   return (
+    <>
       <h1>Things to do today...</h1>
-      <form onSubmit={this.addTodo}>
+      <form onSubmit={addTodo}>
         <label>
           <input
             type="text"
             placeholder="What do you need to do today?"
-            value={neWtodo}
-            onChange={this.handleChange}
+            value={newTodo}
+            onChange={(e) => updateNewTodo(e.target.value)}
           />
         </label>
       </form>
-      <div class="todo-container">
-        {toos.map((todo, idx) =>
-          <ToDo
-            ask={todo.task}
-            todo={todo.done}
-            handleDone={e => this.handleDone(e, idx)}
-            key={idx}
-          />
+      <div className="todo-container">
+        {todos.map((todo, idx) =>
+        <ToDo
+          task={todo.task}
+          done={todo.done}
+          handleDone={e => handleDone(e, idx)}
+          key={idx}
+        />
         )}
       </div>
+    </>
   )
 }
 
