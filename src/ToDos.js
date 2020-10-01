@@ -1,70 +1,79 @@
-import React, { useState } from 'react'
-import ToDo from './ToDo'
-import './App.css'
+import React, { useState } from "react";
+import ToDo from "./ToDo";
+import "./ToDos.css";
 
-function ToDos () {
-   = useStte([
+function ToDos() {
+  const [todos, updateTodos] = useState([
     {
       task: "Feed Blair",
-      done: false
-    }, {
+      done: false,
+    },
+    {
       task: "clean apartment",
-      done: false
-    } {
+      done: false,
+    },
+    {
       task: "create debugging assignment",
-      done: true
-    }
-  ])
+      done: true,
+    },
+  ]);
 
-  const [updateNewTodo] = useState('');
+  const [newTodo, updateNewTodo] = useState("");
 
   const handleDone = (e, idx) => {
-    updateTodos(prevTodos.map((todo, index) => {
-      if (index === idx) {
-        return { 
-          ...todont,
-          done: !!todo.done,
+    updateTodos((prevTodos) =>
+      prevTodos.map((todo, index) => {
+        if (index === idx) {
+          return {
+            ...todo,
+            done: !todo.done,
+          };
         }
-      }
-      return todo;
-    }))
-  }
+        return todo;
+      })
+    );
+  };
 
   const addTodo = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    updateTodos(prevTodos => {
-      return [...prevTodos, {
-        task: this.state.newTodo,
-        done: false
-      }];
-    })
-    updateNewTodo('');
-  }
+    updateTodos((prevTodos) => {
+      return [
+        ...prevTodos,
+        {
+          task: newTodo,
+          done: false,
+        },
+      ];
+    });
+    updateNewTodo("");
+  };
 
   return (
+    <div>
       <h1>Things to do today...</h1>
-      <form onSubmit={this.addTodo}>
+      <form onSubmit={addTodo}>
         <label>
           <input
             type="text"
             placeholder="What do you need to do today?"
-            value={neWtodo}
-            onChange={this.handleChange}
+            value={newTodo}
+            onChange={(e) => updateNewTodo(e.target.value)}
           />
         </label>
       </form>
       <div class="todo-container">
-        {toos.map((todo, idx) =>
+        {todos.map((todo, idx) => (
           <ToDo
-            ask={todo.task}
-            todo={todo.done}
-            handleDone={e => this.handleDone(e, idx)}
+            task={todo.task}
+            done={todo.done}
+            handleDone={(e) => handleDone(e, idx)}
             key={idx}
           />
-        )}
+        ))}
       </div>
-  )
+    </div>
+  );
 }
 
-export default ToDos
+export default ToDos;
