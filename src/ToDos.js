@@ -3,8 +3,8 @@ import ToDo from './ToDo'
 import './App.css'
 
 function ToDos () {
-  useStte({
-    todos: [{
+   = useStte([
+    {
       task: "Feed Blair",
       done: false
     }, {
@@ -13,35 +13,33 @@ function ToDos () {
     } {
       task: "create debugging assignment",
       done: true
-    }],
-    newTodo: ''
-  })
+    }
+  ])
+
+  const [updateNewTodo] = useState('');
 
   const handleDone = (e, idx) => {
-    updateTodos(prevState => {
-      prevState.toos[idx].done = !prevState.todos[idx]done
-      return prevState
-    })
+    updateTodos(prevTodos.map((todo, index) => {
+      if (index === idx) {
+        return { 
+          ...todont,
+          done: !!todo.done,
+        }
+      }
+      return todo;
+    }))
   }
-
-  const handleChange = () => {
-    updateTodos(
-      e.target
-    )
-  }
-
 
   const addTodo = (e) => {
     e.preventDefault()
 
-    updateTodos(prevState => {
-      prevState.todo.push({
+    updateTodos(prevTodos => {
+      return [...prevTodos, {
         task: this.state.newTodo,
         done: false
-      })
-      prevState.new = ""
-      return prevState
+      }];
     })
+    updateNewTodo('');
   }
 
   return (
@@ -51,13 +49,13 @@ function ToDos () {
           <input
             type="text"
             placeholder="What do you need to do today?"
-            value={this.state.todo}
+            value={neWtodo}
             onChange={this.handleChange}
           />
         </label>
       </form>
       <div class="todo-container">
-        {todos.map((todo, idx) =>
+        {toos.map((todo, idx) =>
           <ToDo
             ask={todo.task}
             todo={todo.done}
